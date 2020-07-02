@@ -11,10 +11,10 @@ function AuthProvider (props) {
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    const validJWT = API.determineJwtState()
+
+    const validJWT = getCookie('csrfToken')
     if (validJWT) {
-      getMe()
-        .then(() => { setAuthDetermined(true) })
+        then(() => { setAuthDetermined(true) })
         .catch(error => { console.log(error) })
     } else {
       setAuthDetermined(true)
@@ -27,14 +27,13 @@ function AuthProvider (props) {
     setFetching(true)
     setError(false)
     try{
-        const {user} = await auth.signInWithEmailAndPasswordHandler ({email, password});
+        const {user} = auth.signInWithEmailAndPasswordHandler ({email, password});
         ;
       }
       catch(error){
         setError('Error Signing up with email and password');
       }
-      .then(getMe)
-      .catch(error => { setError(error.response.data.reason) })
+      catch(error => { setError(error.response.data.reason) })
       .finally(() => { setFetching(false) })
   }
 
@@ -48,8 +47,7 @@ function AuthProvider (props) {
       catch(error){
         setError('Error Signing up with email and password');
       }
-      .then(getMe)
-      .catch(error => { setError(error.response.data.reason) })
+      catch(error => { setError(error.response.data.reason) })
       .finally(() => { setFetching(false) })
   }
 

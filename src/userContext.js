@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Loader from '../Components/Loader'
+import { auth } from "./firebase";
 
 const UserContext = React.createContext()
 
@@ -8,18 +9,6 @@ function AuthProvider (props) {
   const [authDetermined, setAuthDetermined] = useState(false)
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState(false)
-
-  function getMe () {
-    return API.getMe()
-      .then(response => {
-        setUser({
-          name: response.data.name,
-          img: response.data.avatar_url
-        })
-        setFetching(false)
-      })
-      .catch(error => { console.log(error) })
-  }
 
   useEffect(() => {
     const validJWT = API.determineJwtState()
@@ -37,7 +26,13 @@ function AuthProvider (props) {
   const logIn = form => {
     setFetching(true)
     setError(false)
-    API.logIn(form)
+    try{
+        const {user} = await auth.signInWithEmailAndPasswordHandler ({email, password});
+        ;
+      }
+      catch(error){
+        setError('Error Signing up with email and password');
+      }
       .then(getMe)
       .catch(error => { setError(error.response.data.reason) })
       .finally(() => { setFetching(false) })
@@ -46,19 +41,29 @@ function AuthProvider (props) {
   const signUp = form => {
     setFetching(true)
     setError(false)
-    API.signUp(form)
+    try{
+        const {user} = await auth.createUserWithEmailAndPasswordHandler  ({email, password});
+        ;
+      }
+      catch(error){
+        setError('Error Signing up with email and password');
+      }
       .then(getMe)
       .catch(error => { setError(error.response.data.reason) })
       .finally(() => { setFetching(false) })
   }
 
   const logOut = () => {
-    API.logOut().then(() => { setUser(null) })
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
   }
 
   return (
     <UserContext.Provider
-      value={{ user, fetching, error, logIn, signUp, logOut }} {...props}
+      value={{ user, fetching, error, logIn, signUp, logOut }}
     />
   )
 }

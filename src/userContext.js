@@ -26,6 +26,7 @@ function AuthProvider (props) {
   const logIn = form => {
     setFetching(true)
     setError(false)
+
     try{
         const {user} = auth.signInWithEmailAndPasswordHandler ({email, password});
         ;
@@ -33,22 +34,28 @@ function AuthProvider (props) {
       catch(error){
         setError('Error Signing up with email and password');
       }
-      catch(error => { setError(error.response.data.reason) })
-      .finally(() => { setFetching(false) })
+    try{
+    }   
+    catch(error){ 
+        setError(error.response.data.reason) 
+    }
+    finally{() => { setFetching(false) }
   }
 
   const signUp = form => {
     setFetching(true)
     setError(false)
     try{
-        const {user} = await auth.createUserWithEmailAndPasswordHandler  ({email, password});
-        ;
+        const {user} = auth.createUserWithEmailAndPasswordHandler  ({email, password});
       }
       catch(error){
         setError('Error Signing up with email and password');
       }
-      catch(error => { setError(error.response.data.reason) })
-      .finally(() => { setFetching(false) })
+      try{}
+      catch(error)
+        { setError(error.response.data.reason) 
+      }  
+      finally{() => { setFetching(false) }
   }
 
   const logOut = () => {

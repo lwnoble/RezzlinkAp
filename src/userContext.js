@@ -32,14 +32,8 @@ function AuthProvider (props) {
         const {user} = auth.signInWithEmailAndPasswordHandler ({email, password});
         ;
       }
-      catch(error){
-        setError('Error Signing up with email and password');
-      }
-    try{
-      }   
-      catch(error){ 
-          setError(error.response.data.reason) 
-      }
+      catch(error)
+        { setError(error.response.data.reason) }
       finally{() => { setFetching(false) 
       }
   }
@@ -49,17 +43,12 @@ function AuthProvider (props) {
     setError(false)
     try{
         const {user} = auth.createUserWithEmailAndPasswordHandler  ({email, password});
-      }
-      catch(error){
-        setError('Error Signing up with email and password');
-      }
-      try{}
-        catch(error)
-          { setError(error.response.data.reason) 
-        }  
-        finally{() => { setFetching(false) 
-      }
-  }
+    }
+    catch(error)
+      { setError(error.response.data.reason) }
+    finally{() => { setFetching(false) 
+    }
+}
 
   const logOut = () => {
     firebase.auth().signOut().then(function() {
@@ -74,7 +63,5 @@ function AuthProvider (props) {
       value={{ user, fetching, error, logIn, signUp, logOut }}
     />
   )
-}
-
-
+}}
 const useUser = () => useContext(UserContext)

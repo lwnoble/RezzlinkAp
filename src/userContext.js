@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Loader from '../Components/Loader'
 import { auth } from "./firebase";
+export { AuthProvider, useUser }
 
 const UserContext = React.createContext()
 
@@ -35,11 +36,12 @@ function AuthProvider (props) {
         setError('Error Signing up with email and password');
       }
     try{
-    }   
-    catch(error){ 
-        setError(error.response.data.reason) 
-    }
-    finally{() => { setFetching(false) }
+      }   
+      catch(error){ 
+          setError(error.response.data.reason) 
+      }
+      finally{() => { setFetching(false) 
+      }
   }
 
   const signUp = form => {
@@ -52,10 +54,11 @@ function AuthProvider (props) {
         setError('Error Signing up with email and password');
       }
       try{}
-      catch(error)
-        { setError(error.response.data.reason) 
-      }  
-      finally{() => { setFetching(false) }
+        catch(error)
+          { setError(error.response.data.reason) 
+        }  
+        finally{() => { setFetching(false) 
+      }
   }
 
   const logOut = () => {
@@ -73,5 +76,5 @@ function AuthProvider (props) {
   )
 }
 
+
 const useUser = () => useContext(UserContext)
-export { AuthProvider, useUser }

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import {auth} from "./firebase";
 import profile from './img/circle-10.svg' // relative path to image
 import {
   BrowserRouter as Router,

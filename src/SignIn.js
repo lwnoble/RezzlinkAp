@@ -7,10 +7,10 @@ import { useUser } from "./userContext";
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+    const [error] = useState(null);
     const {login} = useUser()
 
-    const signInWithEmailAndPasswordHandler = (event,email, password) => {
+    const signInWithEmailAndPasswordHandler = (event, email, password) => {
          event.preventDefault();
          login({email, password})
     };

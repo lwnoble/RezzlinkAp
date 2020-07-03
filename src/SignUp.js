@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  Link
-} from "react-router-dom";
-import { auth, signInWithGoogle } from "./firebase";
+import { signInWithGoogle } from "./firebase";
 import { useUser } from "./userContext";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const {signUp } = useUser()
 
   const createUserWithEmailAndPasswordHandler = async (event, email, password) => {

@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import Loader from './Loader'
 import { auth } from "./firebase";
 
-export { AuthProvider, useUser }
-
 const UserContext = React.createContext()
 
 function AuthProvider (props) {
@@ -64,3 +62,4 @@ function AuthProvider (props) {
 }
   
 const useUser = () => useContext(UserContext)
+export { AuthProvider, useUser }

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Loader from '../Components/Loader'
+import Loader from './Loader'
 import { auth } from "./firebase";
 
 export { AuthProvider, useUser }
@@ -22,7 +22,7 @@ function AuthProvider (props) {
   
   if (!authDetermined) return <Loader size={60}/>
   
-  const logIn = (email,password) => {
+  const logIn = (email, password) => {
     setFetching(true)
     setError(false)
     
@@ -32,20 +32,20 @@ function AuthProvider (props) {
       }
       catch(error)
         { setError('Error Signing in with email and password'); }
-      finally{() => { setFetching(false) }
-    }
+      finally{ setFetching(false) }
   }
   
-  const signUp = (email,password) => {
+  const signUp = (email, password) => {
     setFetching(true)
     setError(false)
+
     try{
       const {user} = auth.createUserWithEmailAndPasswordHandler ({email, password});
+      ;
       }
       catch(error)
-        { setError('Error Signing up with email and password');}
-      finally{() => { setFetching(false)}
-    }
+        { setError('Error Signing up with email and password'); }
+      finally{ setFetching(false) }
   }
   
   const logOut = () => {

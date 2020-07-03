@@ -12,7 +12,7 @@ const SignIn = () => {
 
     const signInWithEmailAndPasswordHandler = (event,email, password) => {
          event.preventDefault();
-         login()
+         login({email, password})
     };
 
       const onChangeHandler = (event) => {
@@ -49,8 +49,7 @@ const SignIn = () => {
                 </label>
                 <input
                   type="email"
-                  className="my-1 p-1 w-full"
-                  name="userEmail"
+                  name="email"
                   value = {email}
                   placeholder="E.g: faruq123@gmail.com"
                   id="userEmail"
@@ -63,8 +62,7 @@ const SignIn = () => {
                   </label>
                   <input
                     type="password"
-                    className="mt-1 mb-3 p-1 w-full"
-                    name="userPassword"
+                    name="password"
                     value = {password}
                     placeholder="Your Password"
                     id="userPassword"

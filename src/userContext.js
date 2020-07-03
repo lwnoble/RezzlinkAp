@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Loader from '../Components/Loader'
 import { auth } from "./firebase";
+
 export { AuthProvider, useUser }
 
 const UserContext = React.createContext()
@@ -11,20 +12,17 @@ function AuthProvider (props) {
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState(false)
   
+  
   useEffect(() => {
   
-  const validJWT = getCookie('csrfToken')
+  const validJWT = auth.setPersistence(auth.Auth.Persistence.NONE);
     if (validJWT) {
-    then(() => { setAuthDetermined(true) })
-    .catch(error => { console.log(error) })
-    } else {
-    setAuthDetermined(true)
-    }
+      setAuthDetermined(true)  }
   }, [])
   
   if (!authDetermined) return <Loader size={60}/>
   
-  const logIn = form => {
+  const logIn = (email,password) => {
     setFetching(true)
     setError(false)
     
@@ -34,11 +32,11 @@ function AuthProvider (props) {
       }
       catch(error)
         { setError('Error Signing in with email and password'); }
-      finally{() => { setFetching(false)
+      finally{() => { setFetching(false) }
     }
   }
   
-  const signUp = form => {
+  const signUp = (email,password) => {
     setFetching(true)
     setError(false)
     try{
@@ -46,12 +44,12 @@ function AuthProvider (props) {
       }
       catch(error)
         { setError('Error Signing up with email and password');}
-      finally{() => { setFetching(false)
+      finally{() => { setFetching(false)}
     }
   }
   
   const logOut = () => {
-    firebase.auth().signOut().then(function() {
+    auth.signOut().then(function() {
       // Sign-out successful.
     }).catch(function(error) {
       // An error happened.

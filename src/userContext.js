@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Loader from './Loader'
-import { auth } from "./firebase";
+import { auth, generateUserDocument  } from "./firebase";
 
 const UserContext = React.createContext()
 
@@ -10,15 +10,16 @@ function AuthProvider (props) {
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState(false)
   
-  
+
   useEffect(() => {
-  
-  const validJWT = auth.setPersistence(auth.Auth.Persistence.NONE);
-    if (validJWT) {
-      setAuthDetermined(true)  }
+    auth.onAuthStateChanged(async userAuth => {
+      const user = await generateUserDocument(userAuth);
+      setUser({ user });
+      setAuthDetermined(true)  
+    })
   }, [])
   
-  if (!authDetermined) return <Loader size={60}/>
+  if (!setAuthDetermined) return <Loader size={60}/>
   
   const logIn = (email, password) => {
     setFetching(true)

@@ -16,9 +16,7 @@ import { useUser } from "./userContext";
 
 
 
-function App() {
-  const {user} = useUser()
-
+function App() { 
   const page = {
     signinup: '/signinup',
     home: '/home',
@@ -27,6 +25,7 @@ function App() {
     builder: '/builder',
   }
 
+  console.log(useUser)
 
   return (
     

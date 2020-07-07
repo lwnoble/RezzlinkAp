@@ -19,7 +19,7 @@ function AuthProvider (props) {
     })
   }, [])
   
-  if (!setAuthDetermined) return <Loader size={60}/>
+  if (!authDetermined) return <Loader size={60}/>
   
   const logIn = (email, password) => {
     setFetching(true)
